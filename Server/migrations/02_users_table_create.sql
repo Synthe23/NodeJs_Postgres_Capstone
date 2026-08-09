@@ -6,8 +6,7 @@ CREATE TABLE
         google_id VARCHAR(255) UNIQUE,
         role VARCHAR(20) NOT NULL DEFAULT 'USER' CHECK (
             role IN (
-                'USER'
-                OR 'ADMIN'
+                'USER','ADMIN'
             )
         ),
         created_at TIMESTAMP NOT NULL DEFAULT NOW (),

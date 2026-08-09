@@ -1,12 +1,10 @@
-import { env } from "node:process";
+import { env } from "../config/env.js";
 import pino from "pino";
 
-const isProduction =
-  env.NODE_ENV === "production" || env.isProduction === "true";
+const isProduction = env.isProduction;
 
 export const logger = pino({
-  // Safely fallback to lowercase info if logLevel is missing or uppercase
-  level: (env.logLevel || "info").toLowerCase(),
+  level: env.logLevel.toLowerCase(),
 
   transport: isProduction
     ? undefined
