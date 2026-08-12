@@ -22,4 +22,8 @@ export const env = {
   logLevel: process.env.LOG_LEVEL ?? "info",
 
   databaseUrl: checkRequiredEnvVariables("DATABASE_URL"),
+
+  jwtAccessSecret: checkRequiredEnvVariables("JWT_SECRET"),
+
+  jwtAccessExpiresIn: process.env.JWT_ACCESS_EXPIRES_IN ?? "15m",
 };

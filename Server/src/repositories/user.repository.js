@@ -32,3 +32,14 @@ export async function createUser(email, passwordHash) {
 
   return result.rows[0];
 }
+
+// Find user with the password from db
+export async function findUserByEmailWithPassowrd(email) {
+  const result = await pool.query(
+    `
+    SELECT id, email, role, password_Hash, created_at FROM users WHERE email = $1
+    `,
+    [email]
+  );
+  return result.rows[0];
+}
