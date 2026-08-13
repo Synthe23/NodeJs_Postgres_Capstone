@@ -1,11 +1,11 @@
-import { AppError } from "../errors/appError.js";
-import { verifyAccessToken } from "../utils/jwt.js";
+import { appError } from "../errors/appError.js";
+import { verifyAccessToken } from "../lib/jwt.js";
 
 export function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return next(new AppError(401, "Access token is required!"));
+    return next(new appError(401, "Access token is required!"));
   }
 
   const token = authHeader.split(" ")[1];

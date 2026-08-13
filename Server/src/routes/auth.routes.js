@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { loginUser, registerUser } from "../services/auth.service.js";
+import { authMiddleware } from "../middlewares/auth.middleware.js";
 
 const authRouter = Router();
 
@@ -33,6 +34,16 @@ authRouter.post("/login", async (req, res, next) => {
   } catch (error) {
     next(error);
   }
+});
+
+// GET the CURRENT user
+authRouter.get("/me", authMiddleware, (req, res) => {
+  res.status(200).json({
+    success: true,
+    data: {
+      user: req.user,
+    },
+  });
 });
 
 export default authRouter;
