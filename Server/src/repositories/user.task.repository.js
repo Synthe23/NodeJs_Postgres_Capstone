@@ -18,9 +18,13 @@ export async function createTask(userId, title) {
 export async function fetchTaskByUserId(userId) {
   const result = await pool.query(
     `
-    SELECT id, title, status, user_id, createdAt, updatedAt FROM support_tasks;
+    SELECT id, status, title, user_id, created_at, updated_at
+    FROM support_tasks
+    WHERE user_id = $1
+    ORDER BY created_at DESC;
     `,
-    [id, title, status, user_id, createDeflate, updatedAt]
+    [userId]
   );
+
   return result.rows;
 }

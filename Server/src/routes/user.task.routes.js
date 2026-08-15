@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
-import { createUserTask } from "../services/user.task.service.js";
+import { createUserTask, getUserTasks } from "../services/user.task.service.js";
 
 export const userTaskRouter = Router();
 
@@ -23,9 +23,15 @@ userTaskRouter.post("/", authMiddleware, async (req, res, next) => {
 });
 
 // Route to get the user tasks
-userTaskRouter.get("/", async (req, res, next) => {
+userTaskRouter.get("/", authMiddleware, async (req, res, next) => {
   try {
-    const tasks = await getUserTasks();
+    const tasks = await getUserTasks(req.user.userId);
+    return res.status(200).json({
+      success: true,
+      data: {
+        tasks
+      }
+    });
   } catch (error) {
     next(error);
   }

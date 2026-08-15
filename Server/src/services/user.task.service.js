@@ -1,5 +1,5 @@
 import { appError } from "../errors/appError.js";
-import { createTask } from "../repositories/user.task.repository.js";
+import { createTask, fetchTaskByUserId } from "../repositories/user.task.repository.js";
 
 // Function to validate the title
 function validateTitle(title) {
@@ -27,5 +27,5 @@ export async function createUserTask(userId, title) {
 }
 
 export async function getUserTasks(userId){
-  return 
+  return fetchTaskByUserId(userId);
 }
