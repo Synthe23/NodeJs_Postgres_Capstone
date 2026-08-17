@@ -1,6 +1,10 @@
 import { Router } from "express";
 import { authMiddleware } from "../middlewares/auth.middleware.js";
-import { createUserTask, getUserTasks } from "../services/user.task.service.js";
+import {
+  createUserTask,
+  getUserTasks,
+  getUserTaskById,
+} from "../services/user.task.service.js";
 
 export const userTaskRouter = Router();
 
@@ -29,10 +33,34 @@ userTaskRouter.get("/", authMiddleware, async (req, res, next) => {
     return res.status(200).json({
       success: true,
       data: {
-        tasks
-      }
+        tasks,
+      },
     });
   } catch (error) {
     next(error);
   }
 });
+
+// Route to get the single task of the user from the user and the task ID.
+userTaskRouter.get("/:taskId", authMiddleware, async (req, res, next) => {
+  try {
+    const task = await getUserTaskById(req.user.userId, req.params.taskId);
+    res.status(200).json({
+      success: true,
+      data: {
+        task,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Update the contents of a task by taskID
+userTaskRouter.patch("/:taskId", async(req, res, next) => {
+  try {
+    const task = await updateUserTask(userId, req.params.taskId);
+  } catch (error) {
+    next(error);
+  }
+})

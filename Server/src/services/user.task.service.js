@@ -1,5 +1,9 @@
 import { appError } from "../errors/appError.js";
-import { createTask, fetchTaskByUserId } from "../repositories/user.task.repository.js";
+import {
+  createTask,
+  fetchTaskByUserId,
+  findTaskByIdAndUserId,
+} from "../repositories/user.task.repository.js";
 
 // Function to validate the title
 function validateTitle(title) {
@@ -26,6 +30,23 @@ export async function createUserTask(userId, title) {
   return createTask(userId, validTitle);
 }
 
-export async function getUserTasks(userId){
+// Function to get all the user tasks
+export async function getUserTasks(userId) {
   return fetchTaskByUserId(userId);
+}
+
+// Fucntion to get the user task by the taskId
+export async function getUserTaskById(userId, taskId) {
+  const task = await findTaskByIdAndUserId(userId, taskId);
+
+  if (!task) {
+    throw new appError(400, "Task not found!");
+  }
+  return task;
+}
+
+// Fucntion to edit the task by taskId of a particular user
+export async function updateUserTask(user_id, taskID, title) {
+  const validTitle = validateTitle(title);
+  const task = updateTaskTitle();
 }
