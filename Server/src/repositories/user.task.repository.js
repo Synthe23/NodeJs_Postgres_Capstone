@@ -42,4 +42,15 @@ export async function findTaskByIdAndUserId(userId, taskId) {
 }
 
 // Edit the task of a user with the taskId and the userId with the title
-export async function updateTaskTitle()
+export async function updateTaskTitle(userId, taskID, title) {
+  const result = await pool.query(
+    `
+    UPDATE support_tasks
+    SET title = $3, updated_at = NOW()
+    WHERE user_id = $1 AND id = $2
+    RETURNING id, title, status, user_id, created_at, updated_at
+    `,
+    [userId, taskID, title]
+  );
+  return result.rows[0];
+}

@@ -3,6 +3,7 @@ import {
   createTask,
   fetchTaskByUserId,
   findTaskByIdAndUserId,
+  updateTaskTitle,
 } from "../repositories/user.task.repository.js";
 
 // Function to validate the title
@@ -46,7 +47,12 @@ export async function getUserTaskById(userId, taskId) {
 }
 
 // Fucntion to edit the task by taskId of a particular user
-export async function updateUserTask(user_id, taskID, title) {
+export async function updateUserTask(userId, taskID, title) {
   const validTitle = validateTitle(title);
-  const task = updateTaskTitle();
+  const task = updateTaskTitle(userId, taskID, title);
+
+  if (!task) {
+    throw new appError(404, "Task not found!");
+  }
+  return task;
 }
