@@ -54,3 +54,16 @@ export async function updateTaskTitle(userId, taskID, title) {
   );
   return result.rows[0];
 }
+
+// Delete the task with the id and the user id
+export async function deleteUserTaskById(userId, taskID) {
+  const result = await pool.query(
+    `
+    DELETE
+    FROM support_tasks
+    WHERE user_id = $1 AND id = $2
+    `,
+    [userId, taskID]
+  );
+  return result.rowCount;
+}

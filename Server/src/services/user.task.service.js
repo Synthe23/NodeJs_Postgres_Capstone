@@ -4,6 +4,7 @@ import {
   fetchTaskByUserId,
   findTaskByIdAndUserId,
   updateTaskTitle,
+  deleteUserTaskById,
 } from "../repositories/user.task.repository.js";
 
 // Function to validate the title
@@ -49,10 +50,21 @@ export async function getUserTaskById(userId, taskId) {
 // Fucntion to edit the task by taskId of a particular user
 export async function updateUserTask(userId, taskID, title) {
   const validTitle = validateTitle(title);
-  const task = updateTaskTitle(userId, taskID, title);
+  const task = updateTaskTitle(userId, taskID, validTitle);
 
   if (!task) {
     throw new appError(404, "Task not found!");
   }
+  return task;
+}
+
+// Function to delete userTask by the id
+export async function deleteUserTask(userId, taskId) {
+  const task = await deleteUserTaskById(userId, taskId);
+
+  if (!task) {
+    throw new appError(404, "Task with the id not found!");
+  }
+
   return task;
 }

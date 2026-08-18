@@ -5,6 +5,7 @@ import {
   getUserTasks,
   getUserTaskById,
   updateUserTask,
+  deleteUserTask,
 } from "../services/user.task.service.js";
 
 export const userTaskRouter = Router();
@@ -71,6 +72,20 @@ userTaskRouter.patch("/:taskId", authMiddleware, async (req, res, next) => {
       data: {
         task,
       },
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
+// Delete the task from the task and the userID
+userTaskRouter.delete("/:taskId", authMiddleware, async (req, res, next) => {
+  try {
+    await deleteUserTask(req.user.userId, req.params.taskId);
+
+    return res.status(200).json({
+      success: true,
+      message: `Successful deletion of the task!`,
     });
   } catch (error) {
     next(error);
