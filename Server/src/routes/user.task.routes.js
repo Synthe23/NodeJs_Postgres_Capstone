@@ -13,7 +13,7 @@ export const userTaskRouter = Router();
 // If we want to protect the routes in the task router with the authMiddleware then we can use the
 // userTaskRouter.use(authMiddleware) or else we can manually put the authMiddleware in each route
 
-// Create a task middleware
+// Create a task route
 userTaskRouter.post("/", authMiddleware, async (req, res, next) => {
   try {
     const task = await createUserTask(req.user.userId, req.body.title);
