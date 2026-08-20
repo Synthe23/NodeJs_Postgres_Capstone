@@ -13,7 +13,7 @@ export const userTaskRouter = Router();
 // If we want to protect the routes in the task router with the authMiddleware then we can use the
 // userTaskRouter.use(authMiddleware) or else we can manually put the authMiddleware in each route
 
-// Create a task route
+//* Create a task route
 userTaskRouter.post("/", authMiddleware, async (req, res, next) => {
   try {
     const task = await createUserTask(req.user.userId, req.body.title);
@@ -28,7 +28,7 @@ userTaskRouter.post("/", authMiddleware, async (req, res, next) => {
   }
 });
 
-// Route to get the user tasks
+//* Route to get the user tasks
 userTaskRouter.get("/", authMiddleware, async (req, res, next) => {
   try {
     const tasks = await getUserTasks(req.user.userId);
@@ -43,7 +43,7 @@ userTaskRouter.get("/", authMiddleware, async (req, res, next) => {
   }
 });
 
-// Route to get the single task of the user from the user and the task ID.
+//* Route to get the single task of the user from the user and the task ID.
 userTaskRouter.get("/:taskId", authMiddleware, async (req, res, next) => {
   try {
     const task = await getUserTaskById(req.user.userId, req.params.taskId);
@@ -58,7 +58,7 @@ userTaskRouter.get("/:taskId", authMiddleware, async (req, res, next) => {
   }
 });
 
-// Update the contents of a task by taskID
+//* Update the contents of a task by taskID
 userTaskRouter.patch("/:taskId", authMiddleware, async (req, res, next) => {
   try {
     const task = await updateUserTask(
@@ -78,7 +78,7 @@ userTaskRouter.patch("/:taskId", authMiddleware, async (req, res, next) => {
   }
 });
 
-// Delete the task from the task and the userID
+//* Delete the task from the task and the userID
 userTaskRouter.delete("/:taskId", authMiddleware, async (req, res, next) => {
   try {
     await deleteUserTask(req.user.userId, req.params.taskId);
