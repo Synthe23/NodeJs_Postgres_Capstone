@@ -1,6 +1,7 @@
 import { pool } from "../lib/db.js";
 
 // Find all tasks with the status
+// http://localhost:3000/api/admin/tasks?search=second&status=OPEN
 export async function findAllTasks(filters) {
   const conditions = [];
   const values = [];
@@ -29,4 +30,18 @@ export async function findAllTasks(filters) {
     values
   );
   return result.rows;
+}
+
+// Change the status of the user by the admin with the taskId
+export async function updateTaskStatus(taskID, status) {
+  const result = await pool.query(
+    `
+        UPDATE support_tasks
+        SET status = $1, updated_at = NOW()
+        WHERE id = $2
+        RETURNING id, title, status, created_at, updated_at
+        `,
+    [status, taskID]
+  );
+  return result.rows[0];
 }
