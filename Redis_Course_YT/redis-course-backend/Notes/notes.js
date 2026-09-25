@@ -12,3 +12,10 @@
     //| v> Redis cache is short lived and is used for the frequent accessed data.
 
 //N 5_ Postgres stores the data in the disk so it is permanant storage but redis stores the data in ram so it's really fast but short-lived.
+
+//N 6_ Redis Data Types: i> String ii> Hash iii> List iv> Set v> Sorted-Set vi> TTL
+
+//N 7_ String
+    //| Stores one value under one key
+    //| plain text, store numbers as text, counters
+    //| Eg:- key: page_views "value": 180
